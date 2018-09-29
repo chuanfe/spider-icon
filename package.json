@@ -1,0 +1,20 @@
+{
+  "name": "spiderx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^2.6.1",
+    "cheerio": "^1.0.0-rc.2",
+    "superagent": "^4.0.0-beta.5",
+    "superagent-charset": "^1.2.0"
+  },
+  "devDependencies": {
+    "express": "^4.16.3"
+  }
+}

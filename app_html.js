@@ -1,3 +1,8 @@
+/**
+ * html 页面数据抓取
+ * cheerio 负责解析页面成特定数据格式
+ * jQuery 方式处理dom节点，抓取数据
+ */
 let fs = require("fs");
 var superagent = require('superagent');
 var charset = require('superagent-charset');
@@ -5,7 +10,6 @@ let asyncQuene = require("async").queue;
 charset(superagent);
 var express = require('express');
 var baseUrl = 'http://app.hicloud.com/more/all/'; //输入任何网址都可以
-// var baseUrl = 'http://mi.talkingdata.com/appstore-rank.html';
 const cheerio = require('cheerio');
 var app = express();
 

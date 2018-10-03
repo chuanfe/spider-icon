@@ -1,3 +1,8 @@
+/**
+ * json 接口数据抓取
+ * js 方式直接处理返回数据
+ * 优点：可以自动分页执行，抓取完毕跳出循环
+ */
 let fs = require("fs");
 var superagent = require('superagent');
 var charset = require('superagent-charset');
@@ -5,15 +10,11 @@ let asyncQuene = require("async").queue;
 charset(superagent);
 var express = require('express');
 var baseUrl = 'http://mi.talkingdata.com/appstore/rank.json?date=2018-10-02&cat=36&tab=1&page=0&pagesize=30'; //输入任何网址都可以
-// var baseUrl = 'http://mi.talkingdata.com/appstore-rank.html';
-const cheerio = require('cheerio');
 var app = express();
 
 var Config = {
-    page: 0,
-    maxPageSize: 100,
-    startPage: 1, //开始页码
-    endPage: 1, //结束页码，不能大于当前图片类型总页码
+    page: 0, //开始页码
+    maxPageSize: 100, //最大页码，大于该页码结束爬取
     downloadImg: true, //是否下载图片到硬盘,否则只保存Json信息到文件
     downloadConcurrent: 10, //下载图片最大并发数
     currentImgType: "apple" //当前程序要爬取得图片类型,取下面AllImgType的Key。
@@ -21,10 +22,6 @@ var Config = {
 
 String.prototype.replaceAll = function(s1,s2){ 
     return this.replace(new RegExp(s1,"gm"),s2); 
-}
-
-function GetQueryString(name) {
-    return 1
 }
 
 

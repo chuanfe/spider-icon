@@ -2,6 +2,7 @@
  * html 页面数据抓取
  * cheerio 负责解析页面成特定数据格式
  * jQuery 方式处理dom节点，抓取数据
+ * 可通过修改url参数page来实现分页数据抓取
  */
 let fs = require("fs");
 var superagent = require('superagent');

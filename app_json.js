@@ -94,16 +94,18 @@ function downloadImg(albumList) {
                 console.log(err);
                 // taskDone();
             } else {
-                if(idx < 10) {
-                    idx = '000'+idx
-                }
-                else if(idx < 100) {
-                    idx = '00'+idx
-                }
-                else if(idx < 1000) {
-                    idx = '0'+idx
-                }
-                fs.writeFile(`./${folder}/icon-9${idx}.png`, res.body, function (err) {
+                // if(idx < 10) {
+                //     idx = '000'+idx
+                // }
+                // else if(idx < 100) {
+                //     idx = '00'+idx
+                // }
+                // else if(idx < 1000) {
+                //     idx = '0'+idx
+                // }
+
+                //本地保存图标名称
+                fs.writeFile(`./${folder}/icon-${idx}-${albumTile}.png`, res.body, function (err) {
                     err ? console.log(err) : console.log(`${albumTile}保存一张`);
                     // taskDone();
                 });

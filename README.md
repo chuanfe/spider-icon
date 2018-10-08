@@ -2,11 +2,11 @@
 
 ### 介绍
 
-应用图标爬虫
+应用图标素材爬虫
 
 * 使用node.js
-* html页面数据，借助cheerio解析页面成特定数据格式，后期用类jQuery形式处理dom
-* json接口数据，直接处理返回数据，接口数据抓取是自动分页执行，抓取完毕程序结束
+* html页面爬虫，借助cheerio解析页面成特定数据格式，后期用类jQuery形式处理dom，需要手动更改url参数（page分页）
+* json接口爬虫，直接处理返回数据，接口数据抓取是自动分页执行，抓取完毕程序结束
 
 
 ### 使用
@@ -18,7 +18,7 @@ git clone https://github.com/chuanfe/spider-icon.git
 # 安装
 npm install
 
-# 运行 json或者html
+# 运行 app_json或者app_html
 node app_json.js
 node app_html.js
 

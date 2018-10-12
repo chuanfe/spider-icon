@@ -26,16 +26,10 @@ String.prototype.replaceAll = function(s1,s2){
     return this.replace(new RegExp(s1,"gm"),s2); 
 }
 
-app.get('/index', function(req, res) {
+app.get('/html', function(req, res) {
 
-    //页码
-    var page = req.query.page;
-
-    page = page || '1';
-    Config.page = page;
-    var route = `${page}`
-    
     run(res);
+
 });
 
 function run(res) {

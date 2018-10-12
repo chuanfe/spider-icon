@@ -23,7 +23,9 @@ node app_json.js
 node app_html.js
 
 # 访问浏览器开始抓取数据
-http://localhost:8081/index
+http://localhost:8081/html
+或者
+http://localhost:8081/json
 ```
 
 

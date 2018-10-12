@@ -13,9 +13,9 @@ var baseUrl = 'http://mi.talkingdata.com/appstore/rank.json'; //接口地址
 var app = express();
 
 var Config = {
-    date: '2018-10-02',
+    date: '2018-10-11',
     page: 0, //开始页码
-    maxPageSize: 10, //最大页码，大于该页码结束爬取
+    maxPageSize: 100, //最大页码，大于该页码结束爬取
     downloadImg: true, //是否下载图片到硬盘,否则只保存Json信息到文件
     downloadConcurrent: 10, //下载图片最大并发数
     folderName: "apple-icon" //保存图片文件夹名

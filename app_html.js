@@ -16,11 +16,10 @@ var app = express();
 
 const Config = {
     page: 1,
-    startPage: 1, //开始页码
-    endPage: 1, //结束页码，不能大于当前图片类型总页码
+    maxPageSize: 50, //最大页码，大于该页码结束爬取
     downloadImg: true, //是否下载图片到硬盘,否则只保存Json信息到文件
     downloadConcurrent: 10, //下载图片最大并发数
-    currentImgType: "huawei" //当前程序要爬取得图片类型,取下面AllImgType的Key。
+    folderName: "huawei" //当前程序要爬取得图片类型,取下面AllImgType的Key。
 };
 
 String.prototype.replaceAll = function(s1,s2){ 
@@ -28,11 +27,6 @@ String.prototype.replaceAll = function(s1,s2){
 }
 
 app.get('/index', function(req, res) {
-    //设置请求头
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header('Access-Control-Allow-Methods', 'PUT, GET, POST, DELETE, OPTIONS');
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    res.header('Access-Control-Allow-Headers', 'Content-Type');
 
     //页码
     var page = req.query.page;
@@ -40,8 +34,13 @@ app.get('/index', function(req, res) {
     page = page || '1';
     Config.page = page;
     var route = `${page}`
+    
+    run(res);
+});
+
+function run(res) {
     //网页页面信息是gb2312，所以chaeset应该为.charset('gb2312')，一般网页则为utf-8,可以直接使用.charset('utf-8')
-    superagent.get(baseUrl + route)
+    superagent.get(baseUrl + Config.page)
         // .charset('gb2312')
         .charset('utf-8')
         .end(function(err, sres) {
@@ -78,20 +77,23 @@ app.get('/index', function(req, res) {
                     thumbSrc: thumbImgSrc
                 });
             });
-
-            res.json({ code: 200, msg: "", data: items });
+            if(res) {
+                res.json({ code: 200, msg: "", data: items });
+            }
+            
             downloadImg(items);
         });
-});
+};
 
 function downloadImg(albumList) {
-    console.log('Start download album`s image ....');
-    const folder = `img-${Config.currentImgType}-${Config.page}`;
-    fs.mkdirSync(folder);
+    console.log('Start download images ....');
+    const folder = `img-${Config.folderName}`;
+    if(!fs.existsSync(folder)) {
+        fs.mkdirSync(folder);
+    }
     let downloadCount = 0;
     let q = asyncQuene(async function ({ idx: idx, title: albumTile, url: imageUrl }, taskDone) {
         superagent.get(imageUrl).end(function (err, res) {
-            console.log('image: ',imageUrl)
             if (err) {
                 console.log(err);
             } else {
@@ -99,7 +101,7 @@ function downloadImg(albumList) {
                     idx = '0'+idx
                 };
                 fs.writeFile(`./${folder}/icon-${Config.page}${idx}.png`, res.body, function (err) {
-                    err ? console.log(err) : console.log(`${albumTile}保存一张`);
+                    err ? console.log(err) : console.log(`${imageUrl}保存一张`);
                 });
                 // taskDone()
             }
@@ -110,6 +112,10 @@ function downloadImg(albumList) {
      */
     q.drain = function () {
         console.log('All img download');
+        Config.page ++;
+        if(Config.page <= Config.maxPageSize) {
+            run();
+        }
     }
 
     let imgListTemp = [];
